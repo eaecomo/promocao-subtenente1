@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Promoção a Subtenente</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #1e1e2f;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px;
+    }
+
+    h1 {
+      color: #00ffcc;
+    }
+
+    .box {
+      background: #2a2a3d;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 400px;
+      width: 100%;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: none;
+      border-radius: 6px;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      border: none;
+      background-color: #00cc88;
+      color: white;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .resultado {
+      margin-top: 20px;
+      font-size: 18px;
+      background-color: #333;
+      padding: 15px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Quando você será Subtenente?</h1>
+  <div class="box">
+    <label for="nome">Seu nome:</label>
+    <input type="text" id="nome" placeholder="Ex: João Silva" />
+
+    <label for="antiguidade">Sua antiguidade (número):</label>
+    <input type="number" id="antiguidade" placeholder="Ex: 124" />
+
+    <button onclick="calcularPromocao()">Ver Resultado</button>
+
+    <div class="resultado" id="resultado"></div>
+  </div>
+
+  <script>
+    function calcularPromocao() {
+      const nome = document.getElementById('nome').value.trim();
+      const antiguidade = parseInt(document.getElementById('antiguidade').value.trim());
+      const resultado = document.getElementById('resultado');
+
+      if (!nome || isNaN(antiguidade)) {
+        resultado.innerHTML = "Preencha todos os campos corretamente.";
+        return;
+      }
+
+      // Datas possíveis
+      const anos = [2044, 2045, 2046, 2047, 2048];
+      const meses = ["Abril", "Agosto", "Dezembro"];
+
+      // Geração com base em antiguidade para variar o resultado
+      const seed = antiguidade + nome.length;
+      const randomBase = (seed * 17) % 1000;
+      const ano = anos[randomBase % anos.length];
+      const mes = meses[randomBase % meses.length];
+
+      const bonusChance = Math.random();
+      let frase;
+
+      if (bonusChance <= 0.10) {
+        frase = `🎉 Você babou bem, e ganhou um bônus! Sua promoção a Subtenente será em ${mes} de ${ano}.`;
+      } else {
+        frase = `Parabéns ${nome}, você será Subtenente em ${mes} de ${ano}.`;
+      }
+
+      resultado.innerHTML = frase;
+    }
+  </script>
+</body>
+</html>
